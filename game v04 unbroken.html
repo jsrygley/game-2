@@ -34,6 +34,10 @@
          var hasVisitedLoc2 = false;
          var hasVisitedLoc3 = false;
          var hasVisitedLoc4 = false;
+         var hasVisitedLoc5 = false; 
+         var hasVisitedLoc6 = false; 
+         var hasVisitedLoc7 = false; 
+         var hasVisitedLoc8 = false; 
          
          
          
@@ -151,7 +155,7 @@
                        document.getElementById("East").disabled=false;
                        document.getElementById("West").disabled=false;
                        break;
-               case 1: message = "1. You are in the bakery section. Those cakes smell delicious."; 
+               case 1: message = "1. You are in the bakery section. Your friend Molly is admiring the Lofthouse cookies!"; 
                        document.getElementById("North").disabled=true;
                        document.getElementById("South").disabled=false;
                        document.getElementById("East").disabled=false;
@@ -175,25 +179,25 @@
                        document.getElementById("South").disabled=false;
                        document.getElementById("East").disabled=false;
                        break;
-               case 5: message = "5. case 5"; 
+               case 5: message = "5. You're in the spices aisle. Don't sneeze!"; 
                        document.getElementById("East").disabled=true; 
                        document.getElementById("North").disabled=true;
                        document.getElementById("South").disabled=false;
                        document.getElementById("West").disabled=false;
            		   	   break; 
-         	  case 6: message = "6. case 6"; 
+         	  case 6: message = "6. You're standing at the seafood counter. Run, lobsters! Be free!"; 
          	          document.getElementById("East").disabled=true; 
          	          document.getElementById("South").disabled=true;
          	          document.getElementById("North").disabled=false;
          	          document.getElementById("West").disabled=false;
        		   	       break; 
-         	  case 7: message = "7. case 7"; 
+         	  case 7: message = "7. You're in the cereal aisle. Golden Grahams are by far the superior choice."; 
          	          document.getElementById("West").disabled=true; 
          	          document.getElementById("South").disabled=true;
          	          document.getElementById("North").disabled=false;
          	          document.getElementById("East").disabled=false;
        			       break; 
-         	  case 8: message = "8. case 8"; 
+         	  case 8: message = "8. You're in the pasta aisle. There's your friend Dan, he basically lives here."; 
          	          document.getElementById("North").disabled=true; 
          	          document.getElementById("West").disabled=true;
          	          document.getElementById("South").disabled=false;
@@ -228,7 +232,19 @@
              } else if ( (!hasVisitedLoc4) && (currentLoc === 4) ) {            
                    score = score + 5;
                    hasVisitedLoc4 = true;
-             }            
+             } else if ( (!hasVisitedLoc5) && (currentLoc === 5) ) {            
+                 score = score + 5;
+                 hasVisitedLoc5 = true;
+            }  else if ( (!hasVisitedLoc6) && (currentLoc === 6) ) {            
+               score = score + 5;
+               hasVisitedLoc6 = true;
+            }  else if ( (!hasVisitedLoc7) && (currentLoc === 7) ) {            
+             score = score + 5;
+             hasVisitedLoc7 = true;
+           }   else if ( (!hasVisitedLoc8) && (currentLoc === 8) ) {            
+           score = score + 5;
+           hasVisitedLoc8 = true;
+     }           
           }
 
          //

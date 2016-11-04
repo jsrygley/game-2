@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<!-- Jillian Srygley
+	CMPT 120L-200 
+	Assignment 2 Game v0.2
+	September 26, 2016 -->
+<html><head ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link rel="stylesheet" type="text/css" href="game stylesheet.css">
+
+      <title>
+         Jillian's Awesome Game
+      </title>
+      
+	  <style></style>
+	  
+      <script type="text/javascript">
+      
+      // I set up this variable so that when the player goes to the page, they enter their name and then it is displayed in the header of the game page
+      
+      var name; 
+      
+      name = window.prompt("Please enter your name.");
+      
+      document.write( "<h1> Welcome to " + name + "'s Spooky Grocery Adventure! </h1>");
+      
+      var currentLoc;
+      var score = 0;
+
+      var BAD = -1;
+      var NORTH = 0;
+      var SOUTH = 1;
+      var EAST = 2;
+      var WEST = 3;
+
+      var northCommand = "n";
+      var southCommand = "s";
+      var eastCommand = "e";
+      var westCommand = "w";
+
+      var currentLoc; 
+      
+      function Location(locationId, locationName, locationDescription) {
+      	this.id = locationId;
+      	this.name = locationName;
+      	this.description = locationDescription;
+      	
+      	//this.validDirections = [BAD, BAD, BAD, BAD]; //Array
+      	this.visited = false;
+      	this.toString = function() {
+      		var message = "Location: " + this.name + "\n\n" + this.description;
+      		return (message);
+      	}
+      	this.visit = function() {
+      		currentLoc = this.id;
+      		if (this.visited === false) {
+      			this.visited = true;
+      			score += 5;
+      		}
+      		displayMessage (this.toString());
+      		disableButtons(this.validDirections);
+      		updateScore();
+      		}
+      	}
+      
+      function updateScore() {
+    	  document.getElementById("taMain").textContent = "Score: " + score;
+      }
+      	
+      var center = new Location(0, "Middle of Price Chopper", "You are in the middle of Price Chopper.");
+      var bakery = new Location(1, "Bakery Section", "You are in the bakery section. Your friend Molly is admiring the Lofthouse cookies!");
+      var dairy = new Location(2, "Dairy Aisle", "You are in the dairy aisle. It's cold in here!");
+      var produce = new Location(3, "Produce Section", "You're in the produce section. Looks like apples are in season this time of year.");
+      var junk = new Location(4, "Junk Food Aisle", "You are in the junk food aisle. They have the strangest potato chip flavors these days!");
+      var spices = new Location(5, "Spices Aisle", "You're in the spices aisle. Don't sneeze!");
+      var lobster = new Location(6, "Seafood Counter", "You're standing at the seafood counter. Run, lobsters! Be free!");
+      var cereal = new Location(7, "Cereal Aisle", "You're in the cereal aisle. Golden Grahams are by far the superior choice.");
+      var pasta = new Location(8, "Pasta Aisle", "You're in the pasta aisle. There's your friend Dan, he basically lives here.");
+      var ramen = new Location(9, "Ramen Aisle", "You're in the ramen aisle. There are a bunch of college kids here.");
+      var veggie = new Location(10, "Vegetable Section", "You're in the vegetable section. Looks like there's plenty of kale left.");
+      
+      var locations = [ center, bakery, dairy, produce, junk, spices, lobster, cereal, pasta, ramen, veggie ]
+
+      //Location() doesn't seem to be referring to this list down here. It thinks all directions for all locations are invalid. 
+      
+      center.validDirections = [ bakery.id, produce.id, dairy.id, junk.id ];
+      bakery.validDirections = [ BAD, center.id, spices.id, pasta.id ];
+      dairy.validDirections = [ spices.id, lobster.id, BAD, center.id ];
+      produce.validDirections = [ center.id, veggie.id, lobster.id, cereal.id ];
+      junk.validDirections = [ pasta.id, cereal.id, center.id, BAD ];
+      spices.validDirections = [ BAD, dairy.id, BAD, bakery.id ];
+      lobster.validDirections = [ dairy.id, BAD, BAD, produce.id ];
+      cereal.validDirections = [ junk.id, ramen.id, produce.id, BAD ];
+      pasta.validDirections = [ BAD, junk.id, bakery.id, BAD ];
+      ramen.validDirections = [ cereal.id, BAD, veggie.id, BAD ];
+      veggie.validDirections = [ produce.id, BAD, BAD, ramen.id ];
+
+      //This function tells the player that they cannot move in a certain direction, and indicates the directions that they can move based on their current locations. 
+      //It does this by comparing the player's current location with its array of good/bad directions. It also does this with the other directions, to suggest where the player can go.
+
+      function wrongMoveIndicator(_validDirections) {
+      var message = "You cannot go that way. Right now you can move in the following directions: "; // This is triggering nonstop - why? 
+      	if (_validDirections[NORTH] !== BAD) { 
+      		message += northCommand +  " ";
+      	}
+      	if (_validDirections[SOUTH] !== BAD) {
+      		message += southCommand +  " ";
+      	}
+      	if (_validDirections[EAST] !== BAD) {
+      		message += eastCommand +  " ";
+      	}
+      	if (_validDirections[WEST] !== BAD) {
+      		message += westCommand +  " ";
+      	}
+      	displayMessage(message); 
+      }
+      	// The function goTowards() interprets the player's input of either a button press or input command. It is comparing player's location to the list of available directions, recalling the array positions of North, South, East and West
+      	
+      function goToward(directionCommand) {
+      	switch (directionCommand) {
+      	case northCommand:
+      		var newPlace = locations[currentLoc].validDirections[NORTH]
+      		if (newPlace === BAD) {
+      			wrongMoveIndicator(locations[currentLoc].validDirections);
+      		} else {
+      			locations[newPlace].visit();
+      		}
+      		break;
+      	case southCommand:
+      		var newPlace = locations[currentLoc].validDirections[SOUTH]
+  		if (newPlace === BAD) {
+  			wrongMoveIndicator(locations[currentLoc].validDirections);
+  		} else {
+  			locations[newPlace].visit();
+  		}
+  		break;
+      	case eastCommand:
+      		var newPlace = locations[currentLoc].validDirections[EAST]
+  		if (newPlace === BAD) {
+  			wrongMoveIndicator(locations[currentLoc].validDirections);
+  		} else {
+  			locations[newPlace].visit();
+  		}
+  		break;
+      	case westCommand:
+      		var newPlace = locations[currentLoc].validDirections[WEST]
+  		if (newPlace === BAD) {
+  			wrongMoveIndicator(locations[currentLoc].validDirections);
+  		} else {
+  			locations[newPlace].visit();
+  		}
+  		break;
+    default:
+      			 displayMessage("You cannot go that way.");
+    	break;
+      }
+    }
+      	
+      	function disableButtons(_validDirections) {
+      		document.getElementById("North").disabled = (_validDirections[NORTH] === BAD);
+      		document.getElementById("South").disabled = (_validDirections[SOUTH] === BAD);
+      		document.getElementById("East").disabled = (_validDirections[EAST] === BAD);
+      		document.getElementById("West").disabled = (_validDirections[WEST] === BAD);
+      	}
+      	// Utility function
+      	
+          function displayMessage(message) {
+            document.getElementById("taMain").value = message;
+           }
+          
+          function northButton_click() {
+      		goToward(northCommand)
+      	}
+
+       function southButton_click() {
+      		goToward(southCommand)
+      	}
+
+       function eastButton_click() {
+      	 	goToward(eastCommand)
+      	}
+
+       function westButton_click() {
+      		goToward(westCommand)
+      	}
+       
+       function goButton_click() {
+      		var userInput = document.getElementById("textCommand").value;
+      		userInput = userInput.trim()
+      		userInput = userInput.toLowerCase()
+      		userInput = userInput.substr(0,1) 
+      		switch(userInput) {
+      		case northCommand:
+      		case southCommand:
+      		case eastCommand:
+      		case westCommand:
+      				goToward(userInput);
+      			break;
+      		default:
+      			displayMessage("That is not a valid command. Valid commands are: i hate this ") //N, S, E, W, n, s, e, w
+      		}
+       } 
+         
+         // Initialization
+         // Runs upon page load along with the window prompt - took out temporarily
+         
+       //  function init() {
+        // 	center.visit()
+       //  }
+
+      </script
+	  
+   </head>
+   <body onload="center.visit();"> 
+   
+   <!-- The initialization function is the reason that the location 0 text displays on load -->
+   
+   <h1 class="header"></h1>
+   
+   <br>
+   <br>
+   
+       <textarea id="taMain" rows="8" cols="32"></textarea>
+                 
+       <br>
+       <input type = "text" id = "textCommand" name = "textCommand">
+       		
+       		<input type = "button" value = "Go" onclick="goButton_click();">
+       
+	<!-- I had trouble with disabling the buttons at first because I didn't give them IDs and was using their names for the function, but I figured it out-->
+       <br>
+       <input type="button" id = "North" value="North" onclick="northButton_click();">
+       <input type="button" id = "South" value="South" onclick="southButton_click();">
+       <input type="button" id = "East" value="East" onclick="eastButton_click();">
+       <input type="button" id = "West" value="West" onclick="westButton_click();">
+    
+    <br>
+	    
+	<p> Questions? Concerns? Contact the creator of the game <a href="mailto:jillian.srygley1@marist.edu"> here</a>.
+	<br>
+	<br>
+	
+	<p align="center"> <img src="game map.png" width="750" height="525"></p>
+	
+	
+</body></html>

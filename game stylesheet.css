@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Style-Type" content="text/css" /> 
+    <title>game stylesheet.css</title>
+    <link href="/library/skin/tool_base.css" type="text/css" rel="stylesheet" media="all" />
+    <link href="/library/skin/morpheus-default/tool.css" type="text/css" rel="stylesheet" media="all" />
+    <script type="text/javascript" language="JavaScript" src="/library/js/headscripts.js"></script>
+    <style>body { padding: 5px !important; }</style>
+  </head>
+  <body>
+		<head>
+		<link href="https://fonts.googleapis.com/css?family=Creepster" rel="stylesheet"> 
+		</head>
+
+	 <style>
+	  
+	  
+	  h1 {
+	  color: orange;
+	  text-shadow: 1.5px 1.5px gray;
+	  font-family: 'Creepster', cursive;
+	  font-size: 48px;
+	  letter-spacing: 2px;
+	  }
+	  
+	  .header h1 {
+	  color: orange;
+	  text-shadow: 1.5px 1.5px gray;
+	  font-family: 'Creepster', cursive;
+	  font-size: 48px;
+	  letter-spacing: 2px;
+	  }
+	  
+	  input[type=text] {
+	  color: red;
+	  }
+	  
+	  textarea {
+	  font-family: "Comic Sans MS", cursive, sans-serif;
+	  color: purple;
+	  }
+	  
+	  body {
+	  background-color: black;
+	  color: white;
+	  font-family: 'Creepster', cursive;
+	  letter-spacing: 2px;
+	  }
+	  
+	  a {
+	  color: orange;
+	  }
+	  
+	  a:hover {
+	  color: yellow;
+	  text-decoration: none;
+	  }
+	  
+	  </style>
+  </body>
+</html>

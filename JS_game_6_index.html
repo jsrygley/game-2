@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!-- Jillian Srygley
+	CMPT 120L-200 
+	Assignment 4 Game v0.6
+	November 7, 2016 -->
+<html><head ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link rel="stylesheet" type="text/css" href="game stylesheet.css">
+
+      <title>
+         Jillian's Awesome Game
+      </title>
+      
+	  <style></style>
+	  
+      <script type="text/javascript" src="JS_game_6_locations.js"></script>
+      
+      <script>
+      
+      // I set up this variable so that when the player goes to the page, they enter their name and then it is displayed in the header of the game page
+      
+      var name; 
+      
+      name = window.prompt("Please enter your name.");
+      
+      document.write( "<h1> Welcome to " + name + "'s Spooky Grocery Adventure! </h1>");
+      
+      var currentLoc;
+      var score = 0;
+
+      var northCommand = "n";
+      var southCommand = "s";
+      var eastCommand = "e";
+      var westCommand = "w";
+      var currentLoc; 
+      
+      
+      
+      function updateScore() {
+    	  document.getElementById("taMain").textContent = "Score: " + score;
+      }
+      	
+     
+     
+      function wrongMoveIndicator(_validDirections) {
+      var message = "You cannot go that way. Right now you can move in the following directions: "; // This is triggering nonstop - why? 
+      	if (_validDirections[NORTH] !== BAD) { 
+      		message += northCommand +  " ";
+      	}
+      	if (_validDirections[SOUTH] !== BAD) {
+      		message += southCommand +  " ";
+      	}
+      	if (_validDirections[EAST] !== BAD) {
+      		message += eastCommand +  " ";
+      	}
+      	if (_validDirections[WEST] !== BAD) {
+      		message += westCommand +  " ";
+      	}
+      	displayMessage(message); 
+      }
+      	// The function goTowards() interprets the player's input of either a button press or input command. It is comparing player's location to the list of available directions, recalling the array positions of North, South, East and West
+      	
+      function goToward(directionCommand) {
+      	switch (directionCommand) {
+      	case northCommand:
+      		var newPlace = locations[currentLoc].validDirections[NORTH]
+      		if (newPlace === BAD) {
+      			wrongMoveIndicator(locations[currentLoc].validDirections);
+      		} else {
+      			locations[newPlace].visit();
+      		}
+      		break;
+      	case southCommand:
+      		var newPlace = locations[currentLoc].validDirections[SOUTH]
+  		if (newPlace === BAD) {
+  			wrongMoveIndicator(locations[currentLoc].validDirections);
+  		} else {
+  			locations[newPlace].visit();
+  		}
+  		break;
+      	case eastCommand:
+      		var newPlace = locations[currentLoc].validDirections[EAST]
+  		if (newPlace === BAD) {
+  			wrongMoveIndicator(locations[currentLoc].validDirections);
+  		} else {
+  			locations[newPlace].visit();
+  		}
+  		break;
+      	case westCommand:
+      		var newPlace = locations[currentLoc].validDirections[WEST]
+  		if (newPlace === BAD) {
+  			wrongMoveIndicator(locations[currentLoc].validDirections);
+  		} else {
+  			locations[newPlace].visit();
+  		}
+  		break;
+    default:
+      			 displayMessage("You cannot go that way.");
+    	break;
+      }
+    }
+      	
+      	function disableButtons(_validDirections) {
+      		document.getElementById("North").disabled = (_validDirections[NORTH] === BAD);
+      		document.getElementById("South").disabled = (_validDirections[SOUTH] === BAD);
+      		document.getElementById("East").disabled = (_validDirections[EAST] === BAD);
+      		document.getElementById("West").disabled = (_validDirections[WEST] === BAD);
+      	}
+      	// Utility function
+      	
+          function displayMessage(message) {
+            document.getElementById("taMain").value = message;
+           }
+          
+          function northButton_click() {
+      		goToward(northCommand)
+      	}
+       function southButton_click() {
+      		goToward(southCommand)
+      	}
+       function eastButton_click() {
+      	 	goToward(eastCommand)
+      	}
+       function westButton_click() {
+      		goToward(westCommand)
+      	}
+       
+       function goButton_click() {
+      		var userInput = document.getElementById("textCommand").value;
+      		userInput = userInput.trim()
+      		userInput = userInput.toLowerCase()
+      		userInput = userInput.substr(0,1) 
+      		switch(userInput) {
+      		case northCommand:
+      		case southCommand:
+      		case eastCommand:
+      		case westCommand:
+      				goToward(userInput);
+      			break;
+      		default:
+      			displayMessage("That is not a valid command. Valid commands are: i hate this ") //N, S, E, W, n, s, e, w
+      		}
+       } 
+         
+         // Initialization
+         // Runs upon page load along with the window prompt - took out temporarily
+         
+       //  function init() {
+        // 	center.visit()
+       //  }
+      </script>
+	  
+   </head>
+   <body onload="center.visit();"> 
+   
+   <!-- The initialization function is the reason that the location 0 text displays on load -->
+   
+   <h1 class="header"></h1>
+   
+   <br>
+   <br>
+   
+       <textarea id="taMain" rows="8" cols="32"></textarea>
+                 
+       <br>
+       <input type = "text" id = "textCommand" name = "textCommand">
+       		
+       		<input type = "button" value = "Go" onclick="goButton_click();">
+       
+	<!-- I had trouble with disabling the buttons at first because I didn't give them IDs and was using their names for the function, but I figured it out-->
+       <br>
+       <input type="button" id = "North" value="North" onclick="northButton_click();">
+       <input type="button" id = "South" value="South" onclick="southButton_click();">
+       <input type="button" id = "East" value="East" onclick="eastButton_click();">
+       <input type="button" id = "West" value="West" onclick="westButton_click();">
+    
+    <br>
+	    
+	<p> Questions? Concerns? Contact the creator of the game <a href="mailto:jillian.srygley1@marist.edu"> here</a>.
+	<br>
+	<br>
+	
+	<p align="center"> <img src="game map.png" width="750" height="525"></p>
+	
+	
+</body></html>

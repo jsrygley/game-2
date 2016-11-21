@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Style-Type" content="text/css" /> 
+    <title>game stylesheet.css</title>
+    <link href="/library/skin/tool_base.css" type="text/css" rel="stylesheet" media="all" />
+    <link href="/library/skin/morpheus-default/tool.css" type="text/css" rel="stylesheet" media="all" />
+    <script type="text/javascript" language="JavaScript" src="/library/js/headscripts.js"></script>
+    <style>body { padding: 5px !important; }</style>
+  </head>
+  <body>
+		<head>
+		<link href="https://fonts.googleapis.com/css?family=Fontdiner+Swanky" rel="stylesheet">
+		
+		<link href="https://fonts.googleapis.com/css?family=Didact+Gothic" rel="stylesheet">
+		
+		</head>
+
+	 <style>
+	  
+	  /* Colors
+	  
+	 	light brown: rgb(160, 115, 48)
+		green: rgb(138, 145, 66)
+		dark brown: rgb(86, 62, 25)
+		yellow: rgb(244, 189, 61)
+		tan  brown: rgb(209, 142, 41)
+		red: rgb(186, 97, 39)
+	  
+	  */
+	  
+	  
+	  h1 {
+	  font-size: 48px;
+	  letter-spacing: 2px;
+	  text-align: center;
+	  }
+	  
+	  .header h1 {
+	  color: red;
+	  text-shadow: 1.5px 1.5px gray;
+	  font-family: 'Didact Gothic', sans-serif;
+	  font-size: 48px;
+	  letter-spacing: 2px;
+	  }
+	  
+	  .banner {
+		  color: rgb(86, 62, 25);
+		/* text-shadow: 2px 2px 8px; */
+		  font-size: 36px;
+		  padding-top: 10px;
+		  padding-bottom: 10px;
+	  }
+	  	  
+	  .taMain {
+	  background-image: url("http://images.clipartpanda.com/notebook-paper-background-for-powerpoint-notebook-paperac--lets-go-to-the-wiki---notebook-paper-knzdzs9m.png");
+	  background-size: contain;
+	  font-family: 'Didact Gothic', sans-serif;
+	  display: block;
+	  margin-left: auto;
+	  margin-right: auto;
+	  color: rgb(86, 62, 25);
+	  border: none;
+	  font-size: 24px;
+	  resize: none;
+	  text-align: center;
+	  background-color: rgba(255, 255, 255, 0);
+	  }
+	  
+	  .taMain:focus {
+	  outline: none;
+	  }
+	  
+	  .taScore {
+		  font-family: 'Didact Gothic', sans-serif;
+		  color: white;
+		  background-color: rgb(186, 97, 39);
+		  border: none;
+		  font-size: 24px;
+		  vertical-align: middle;
+		  text-align: center;
+		  resize: none;
+		  padding: 10px 10px;
+	  }
+	  
+	  
+
+	  body {
+      /* background-image: url("http://s3.amazonaws.com/spoonflower/public/design_thumbnails/0521/1290/rhealthy-food-pattern-doodle_shop_preview.png"); */
+      background-image: url("http://www.cfcglobal.org.ph/wp-content/uploads/2016/08/bg.jpg");
+	  background-color: white;
+	  color: rgb(86, 62, 25);
+	  letter-spacing: 1px;
+	  text-align: center;
+	  font-family: 'Didact Gothic', sans-serif;
+	  font-size: 20px;
+	  }
+	  
+	  .button1 {
+		  text-align: center;
+		  padding: 12px 28px;
+		  color: white;
+		  background-color: rgb(160, 115, 48);
+		  font-size: 16px;
+		  transition-duration:0.3s;
+		  border: none;
+	 }
+	  
+	  .button1:hover {
+		  background-color: white;
+		  color: rgb(160, 115, 48);
+	  }
+	  
+	  .button2 {
+		  text-align: center;
+		  padding: 12px 28px;
+		  color: white;
+		  background-color: rgb(138, 145, 66);
+		  font-size: 16px;
+		  transition-duration:0.3s;
+		  border: none;
+	 }
+	  
+	  .button2:hover {
+		  background-color: white;
+		  color: rgb(138, 145, 66);
+	  }
+	  
+	  .button3 {
+		  text-align: center;
+		  padding: 12px 28px;
+		  color: white;
+		  background-color: rgb(86, 62, 25);
+		  font-size: 16px;
+		  transition-duration:0.3s;
+		  border: none;
+	 }
+	  
+	  .button3:hover {
+		  background-color: white;
+		  color: rgb(86, 62, 25);
+	  }
+	  
+	  .button4 {
+		  text-align: center;
+		  padding: 12px 28px;
+		  color: white;
+		  background-color: rgb(244, 189, 61);
+		  font-size: 16px;
+		  transition-duration:0.3s;
+		  border: none;
+	 }
+	  
+	  .button4:hover {
+		  background-color: white;
+		  color: rgb(244, 189, 61);
+	  }
+	  
+	  .button5 {
+		  text-align: center;
+		  padding: 12px 28px;
+		  color: white;
+		  background-color: rgb(209, 142, 41);
+		  font-size: 16px;
+		  transition-duration:0.3s;
+		  border: none;
+	 }
+	  
+	  .button5:hover {
+		  background-color: white;
+		  color: rgb(209, 142, 41);
+	  }
+	  
+	   .button6 {
+		  text-align: center;
+		  padding: 12px 28px;
+		  color: white;
+		  background-color: rgb(186, 97, 39);
+		  font-size: 16px;
+		  transition-duration:0.3s;
+		  border: none;
+	 }
+	  
+	  .button6:hover {
+		  background-color: white;
+		  color: rgb(186, 97, 39);
+	  }
+	  
+	  .button1:disabled, .button2:disabled, .button3:disabled, .button4:disabled, .button5:disabled, .button6:disabled {
+		  cursor: not-allowed;
+		  opacity: .5;
+	  }
+	  
+	  .command {
+	  font-family: 'Didact Gothic', sans-serif;
+	  color: black;
+	  border: none;
+	  font-size: 20px;
+	  text-align: center;
+	  }
+	  
+	  .command:focus {
+	  outline: none;
+	  }
+	  
+	  a {
+	  color: rgb(86, 62, 25);
+	  }
+	  
+	  a:hover {
+	  color: rgb(86, 62, 25);
+	  text-decoration: none;
+	  }
+	  
+	  .comment {
+		  text-shadow: 2px 2px 8px rgb(160, 115, 48);
+	  }
+	  
+	  </style>
+  </body>
+</html>

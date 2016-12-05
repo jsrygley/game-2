@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<!-- Jillian Srygley
+	CMPT 120L-200 
+	Assignment 5 Game v0.8
+	November 7, 2016 -->
+<html><head ><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<link rel="stylesheet" type="text/css" href="game stylesheet 10.css">
+	
+	<link href="https://fonts.googleapis.com/css?family=Didact+Gothic" rel="stylesheet">
+	
+    <script type="text/javascript" src="JS_game_10_locations.js"></script>
+
+      <title>
+         Jillian's Awesome Game
+      </title>
+	  
+	  <!--  <script type="text/javascript" src="JS_game_6_locations2.js"></script> -->
+	  
+      <script type="text/javascript">
+      
+      // I set up this variable so that when the player goes to the page, they enter their name and then it is displayed in the header of the game page
+      
+      var name; 
+      
+      name = window.prompt("Please enter your name.");
+      
+      document.write( "<h1 class='banner'> Welcome to " + name + "'s Holiday Grocery Adventure! </h1>");
+      
+      var currentLoc = 0;
+      var score = 0;
+      
+      var NORTH = 0;
+      var SOUTH = 1;
+      var EAST = 2;
+      var WEST = 3;
+      
+      var northCommand = "n";
+      var southCommand = "s";
+      var eastCommand = "e";
+      var westCommand = "w"; 
+      
+      var helpCommand = "h";
+      var cartCommand = "c";
+      var takeCommand = "t";
+      
+      var hasVisitedLoc0 = false;
+      var hasVisitedLoc1 = false;
+      var hasVisitedLoc2 = false;
+      var hasVisitedLoc3 = false;
+      var hasVisitedLoc4 = false;
+      var hasVisitedLoc5 = false; 
+      var hasVisitedLoc6 = false; 
+      var hasVisitedLoc7 = false; 
+      var hasVisitedLoc8 = false; 
+      var hasVisitedLoc9 = false;
+      var hasVisitedLoc10 = false;
+            
+      var cart = ["coupon"];
+      
+      // This variables are used to keep track of whether or not the items are in the user's inventory
+      
+      var bananaInCart = false; 
+      var cupcakeInCart = false;
+      var pringlesInCart = false; 
+      var carrotInCart = false;
+      var lobsterInCart = false;
+      
+      var bananaCount = 0;
+      var cupcakeCount = 0;
+      var pringlesCount = 0;
+      var carrotCount = 0;
+      var lobsterCount = 0;
+      
+      // Navigation matrix
+      // The y axis is the player's current location
+      // The x axis is the direction they're trying to move in
+      // -1 means they cannot move that way
+      // Other numbers are the numbers of the game locations
+      
+      var map = [ // N    S    E    W
+        /* 0 */    [ 1,   3,   2,   4 ],
+        /* 1 */	   [ -1,  0,   5,   8 ],
+        /* 2 */    [ 5,   6,  -1,   0 ],
+        /* 3 */    [ 0,   10,  6,   7 ],
+        /* 4 */    [ 8,   7,   0,  -1 ],
+        /* 5 */    [ -1,  2,  -1,   1 ],
+        /* 6 */    [ 2,  -1,  -1,   3 ],
+        /* 7 */    [ 4,   9,   3,  -1 ],
+        /* 8 */    [ -1,  4,   1,  -1 ],
+        /* 9 */    [ 7,  -1,   10, -1 ],
+        /* 10 */   [ 3,  11,  -1,   9 ],
+        /* 11 */   [ 10,  12, -1,  -1 ],
+        /* 12 */   [ 11,  -1, -1,  -1 ],
+                ];
+    
+      // This function enables/disables buttons based on whether their directions are valid from the current location
+      
+      function disableButtons(direction) {
+      		document.getElementById("North").disabled = (map[currentLoc][NORTH] === -1);
+      		document.getElementById("South").disabled = (map[currentLoc][SOUTH] === -1);
+      		document.getElementById("East").disabled = (map[currentLoc][EAST] === -1);
+      		document.getElementById("West").disabled = (map[currentLoc][WEST] === -1);
+      	}
+      
+      	// Utility Function
+      	// Sends the game message to the main text area display.
+      	
+       function displayMessage(message) {
+            document.getElementById("taMain").value = message; 
+           }
+      	
+       function updateScore() {
+        	  document.getElementById("taScore").textContent = score;
+        	  }
+      	
+       function northButton_click() {
+      		moveTo(NORTH);
+      	//	look();
+      	}
+		
+       function southButton_click() {
+      		moveTo(SOUTH);
+      	}
+		
+       function eastButton_click() {
+      	 	moveTo(EAST);
+      	}
+		
+       function westButton_click() {
+      		moveTo(WEST);
+      	}
+       
+       // Uses the matrix to determine the new location and if it is a valid move or not.
+       
+       function moveTo(direction) {
+    	   var newLocation = map[currentLoc][direction];
+    	   if (newLocation >= 0) {
+    		   currentLoc = newLocation;
+			   look();
+    	   } else if (newLocation < 0) {
+    		   displayMessage("You cannot go that way.");
+    	   }
+       }
+       
+       // This function switches out location messages and also determines whether or not that location's item will display
+       
+       function look() {
+           var message = "";
+           switch(currentLoc) {
+              case 0: message = center();
+                      break;
+              case 1: message = bakery();
+                      (cupcakeInCart === false) ? message = message + " There is a cupcake with pink frosting here.": message = message;
+                      break; 
+              case 2: message = dairy();
+                      break;
+              case 3: message = produce();
+                      (bananaInCart === false) ? message = message + " There is a ripe yellow banana here.": message = message;
+                      break;
+              case 4: message = junk();
+                     (pringlesInCart === false) ? message = message + " There is a can of strangely shaped chips here.": message = message;
+                      break;
+              case 5: message = spices();
+          		   	  break; 
+        	  case 6: message = lobster();
+        		     (lobsterInCart === false) ? message = message + " Looks like one of these big-clawed fellows wants to come with you.": message = message;
+      		   	      break; 
+        	  case 7: message = cereal();
+      			      break; 
+        	  case 8: message = pasta(); 
+      		          break; 
+        	  case 9: message = ramen(); 
+  		              break; 
+        	  case 10: message = veggie(); 
+        	 		 (carrotInCart === false) ? message = message + " There is a rabbit-approved snack here.": message = message;
+  		           break; 
+        	  case 11: message = checkOut();
+        	  	   break; 
+              default: message = "You cannot go that way.";
+           }
+           checkScore();
+           message = message;
+           displayMessage(message);
+		   displayScore();
+		   disableButtons();
+		   updateScore();
+        }
+       
+       // Adds 5 points for each location in the store
+       // Does not add points for the checkout location (11) or the game win location (12)
+       
+       function checkScore() {
+           if (! hasVisitedLoc0) {            
+              if (currentLoc === 0) {
+                 score =+ 5;
+                 hasVisitedLoc0 = true;
+              }
+           } else if ( (!hasVisitedLoc1) && (currentLoc === 1) ) {            
+                 score = score + 5;
+                 hasVisitedLoc1 = true;
+           } else if ( (!hasVisitedLoc2) && (currentLoc === 2) ) {            
+                 score = score + 5;
+                 hasVisitedLoc2 = true;
+           } else if ( (!hasVisitedLoc3) && (currentLoc === 3) ) {            
+                 score = score + 5;
+                 hasVisitedLoc3 = true;
+           } else if ( (!hasVisitedLoc4) && (currentLoc === 4) ) {            
+                 score = score + 5;
+                 hasVisitedLoc4 = true;
+           } else if ( (!hasVisitedLoc5) && (currentLoc === 5) ) {            
+                 score = score + 5;
+                 hasVisitedLoc5 = true;
+          }  else if ( (!hasVisitedLoc6) && (currentLoc === 6) ) {            
+                 score = score + 5;
+                 hasVisitedLoc6 = true;
+          }  else if ( (!hasVisitedLoc7) && (currentLoc === 7) ) {            
+                 score = score + 5;
+                 hasVisitedLoc7 = true;
+          }   else if ( (!hasVisitedLoc8) && (currentLoc === 8) ) {            
+                 score = score + 5;
+                 hasVisitedLoc8 = true;
+          }   else if ( (!hasVisitedLoc9) && (currentLoc === 9) ) {            
+                 score = score + 5;
+                 hasVisitedLoc9 = true;
+          }   else if ( (!hasVisitedLoc10) && (currentLoc === 10) ) {            
+                 score = score + 5;
+                 hasVisitedLoc10 = true;
+          }           
+      }
+       
+       function goButton_click() {
+      		var userInput = document.getElementById("textCommand").value;
+      		userInput = userInput.trim();
+      		userInput = userInput.toLowerCase();
+      		userInput = userInput.substr(0,1);
+      		switch(userInput) {
+   			case northCommand: northButton_click();
+   				break;
+   			case southCommand: southButton_click();
+   				break;
+   			case eastCommand: eastButton_click();
+   				break;	
+   			case westCommand: westButton_click();
+   				break;
+   			case helpCommand:
+   				help();
+   				break;
+   			case cartCommand:
+   				displayCart();
+   				break;
+   			case takeCommand:
+   				take();
+   				break;
+   			default: displayMessage("That is not a valid command. Valid commands are n, s, e, w, take, help, cart");
+   				break;
+   			}
+   			textCommand.value = "";
+   		 }
+       
+       function helpButton_click() {
+     	   help();
+        }
+       
+       function takeButton_click() {
+     	   take();
+        }
+        
+        function cartButton_click(){
+     	   displayCart();
+        }
+       
+       function help() {
+     	   displayMessage("Need help in Aisle 12? Valid commands are n, s, e, w, take, help, cart")
+        }
+       
+       // take() returns different results based on the status of the itemCount variables
+       // I originally had four different functions to handle the four difference instances of taking items.
+       // This was also helpful during testing.
+       // I have now put each handler in the if/else statement of take().
+       // Moving forward I would like to find a more streamlined way to do this.
+       
+       function take() {
+       	   if (currentLoc === 3 && bananaCount < 1) {
+       		  bananaCount += 1; 
+       			if (bananaCount = 1) {
+       			 	cart.push("banana"); 
+              	  displayMessage("You put the banana in your cart.");
+       		   bananaInCart = true;
+       			}
+       	   } else if (currentLoc === 1 && cupcakeCount < 1) {
+   				 cupcakeCount += 1
+       	   		if (cupcakeCount = 1) {
+       			 	cart.push("cupcake"); 
+              	  displayMessage("You put the cupcake in your cart.");
+       	   }
+   			   cupcakeInCart = true;
+       	   } else if (currentLoc === 4 && pringlesCount < 1) {
+   			  pringlesCount += 1;
+      			if (pringlesCount = 1) {
+      			 	cart.push("pringles"); 
+      			 	displayMessage("You put the Pringles in your cart.");
+      		   }
+   			   pringlesInCart = true;
+       	   } else if (currentLoc === 10 && carrotCount < 1 ) {
+       		   carrotCount += 1;
+      	     	if (carrotCount = 1) {
+      			 	cart.push("carrot"); 
+      			 	displayMessage("You put the carrot in your cart.");
+      		  }
+       		   carrotInCart = true;
+       	   } else if (currentLoc === 6 && lobsterCount < 1) {
+        		  lobsterCount += 1; 
+        			if (lobsterCount = 1) {
+        			 	cart.push("lobster friend"); 
+               	  displayMessage("You put the lobster in your cart.");
+        		   lobsterInCart = true;
+        			}
+       	   } else {
+       		   displayMessage("There's nothing here to take.");
+          } 
+       }
+
+      function displayCart() {
+       	   displayMessage("Your cart contains: " + cart);
+          }
+
+        // I separated the score from the main display for style reasons
+          
+     function displayScore(newScore) {
+			var send = document.getElementById("taScore");
+			send.value = score;
+		}
+      
+        // I use these functions to hide or show parts of the game screen
+        // They are not really relevant until the end of the game
+        // When the player passes the puzzle, I hide all buttons and command line
+        // I also show the "Use coupon" button, which the user clicks to win the game
+        
+    function showElement(elementToShow) {
+    		document.getElementById(elementToShow).style.visibility = "visible";	
+        }
+        
+    function hideElement(elementToHide) {
+    		document.getElementById(elementToHide).style.visibility = "hidden";	
+        }
+        
+        // The user's final score is their coupon discount
+        // After this message there are no more actions for the user to take
+        
+    function useCoupon() {
+        	hideElement("couponButton");
+        	displayMessage("You received " + score + "% off your purchase! Congratulations on your successful grocery shopping trip, you win!");
+        }       	  
+       
+      </script> 
+     </head>
+
+   <body onload="look(); hideElement('couponButton');">
+   
+   <!-- The initialization function is the reason that the location 0 text displays on load -->
+   
+   <h1 class="header"></h1>
+   
+     <br>
+     
+     <br>
+   
+       <textarea class="taMain" id="taMain" rows="8" cols="32" readonly></textarea>
+       
+                 
+     <br>
+       
+       Score:
+       
+     <br>
+		
+	 <textarea class="taScore" id="taScore" rows="1" cols="4" readonly></textarea>
+	 
+	 <br>
+	 
+     <br>
+		
+       <input class="command" type = "text" id = "textCommand" name = "textCommand">
+       		
+       <input class="button1" type = "button" id = "goButton" value = "Go" onclick="goButton_click();">
+       		
+     <br>
+       
+     <br>
+       
+       <input class="button1" type="button" id = "North" value="North" onclick="northButton_click();">
+       <input class="button2" type="button" id = "South" value="South" onclick="southButton_click();">
+       <input class="button3" type="button" id = "East" value="East" onclick="eastButton_click();">
+       <input class="button4" type="button" id = "West" value="West" onclick="westButton_click();">
+       <input class="button5" type="button" id = "takeButton" value="Take" onclick="takeButton_click();"/>
+       <input class="button6" type="button" id = "helpButton" value="Help" onclick="helpButton_click();"/>    
+       <input class="button1" type="button" id = "cartButton" value="Cart" onclick="displayCart();"/>
+    
+    <br>
+    
+    <input class="coupon" type="button" id="couponButton" value="Use that coupon!" onclick="useCoupon();"/>
+    
+    <br>
+	
+	<h2 class="comment"> Welcome to the most exciting grocery trip of your life!</h2>
+	
+	<p><b> Your goal is to explore the store and pick up everything on your shopping list.</b></p> 
+	
+	<p><img src="shopping list.png" width="251" height="215"></p>
+	
+	<p><b> Along the way you'll see old friends and new, and might just learn something about yourself while you're at it.</b></p>
+	    
+	<p class="comment"> Questions? Concerns? Contact the creator of the game <a href="mailto:jillian.srygley1@marist.edu"> here</a>.
+	
+	<p align="center"> <img src="candy cane map.png" id="map" width="750" height="525"> </p>
+	
+</body></html>
